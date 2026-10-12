@@ -34,11 +34,6 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v6
-        # 注意：仓库需要在 Settings → Pages 里把 Source 选为「GitHub Actions」一次，
-        # 默认 token 没有创建 Pages 站点的权限，所以这里不开 enablement
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
