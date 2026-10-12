@@ -1,0 +1,127 @@
+@use '../../styles/variables' as v;
+
+.mv-detail {
+  &__player {
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #000;
+
+    /* Video.js v10 播放器根元素铺满容器 */
+    > * {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &__info {
+    max-width: 900px;
+    padding: 20px 2px 6px;
+  }
+
+  &__name {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 34px;
+    color: v.$text-primary;
+  }
+
+  &__artists {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  &__artist {
+    color: v.$brand;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__sep {
+    margin-right: 6px;
+    color: v.$text-placeholder;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: v.$text-muted;
+  }
+
+  &__qualities {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  &__qualities-label {
+    font-size: 13px;
+    color: v.$text-muted;
+  }
+
+  &__quality {
+    height: 28px;
+    padding: 0 14px;
+    border: 1px solid v.$border;
+    border-radius: v.$radius-pill;
+    background-color: #fff;
+    font-size: 13px;
+    color: v.$text-secondary;
+    cursor: pointer;
+    transition: color 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+
+    &:hover {
+      color: v.$brand;
+      border-color: v.$brand-border;
+    }
+
+    &.is-active {
+      color: v.$brand;
+      border-color: v.$brand-border;
+      background-color: v.$brand-light;
+    }
+  }
+
+  &__desc {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 21px;
+    color: v.$text-secondary;
+    white-space: pre-wrap;
+  }
+
+  &__more-title {
+    margin-top: 34px;
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    color: v.$text-primary;
+  }
+}

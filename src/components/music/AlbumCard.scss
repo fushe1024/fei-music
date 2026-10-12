@@ -1,0 +1,108 @@
+@use '../../styles/variables' as v;
+
+.album-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  /* 封面 + 从右侧露出的唱片圆片 */
+  &__art {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    aspect-ratio: 1;
+    margin-bottom: 10px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      z-index: -1;
+      width: 78%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, #f2f3f5 0 16%, #2a2d33 16% 100%);
+      transform: translateY(-50%);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  &__cover {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    background-color: v.$bg-soft;
+  }
+
+  /* 鼠标移到封面上才出现的播放键（盖在封面之上、唱片圆片之下） */
+  &__play {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.24);
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.16s ease;
+
+    svg {
+      width: 34px;
+      height: 34px;
+      fill: currentColor;
+    }
+  }
+
+  &__art:hover &__play,
+  &__art:focus-within &__play {
+    opacity: 1;
+  }
+
+  &__title {
+    font-size: 15px;
+    line-height: 21px;
+    color: v.$text-primary;
+  }
+
+  &__artists {
+    margin-top: 2px;
+    font-size: 13px;
+    line-height: 19px;
+    color: v.$text-muted;
+  }
+
+  &:hover &__title {
+    color: v.$brand;
+  }
+
+  &--skeleton {
+    .album-card__art--skeleton {
+      border-radius: 10px;
+      background-color: v.$bg-active;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  &__title-skeleton {
+    width: 120px;
+    height: 21px;
+    border-radius: 4px;
+    background-color: v.$bg-active;
+  }
+
+  &__artists-skeleton {
+    width: 84px;
+    height: 19px;
+    margin-top: 2px;
+    border-radius: 4px;
+    background-color: v.$bg-active;
+  }
+}

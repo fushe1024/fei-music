@@ -1,0 +1,56 @@
+@use './variables' as v;
+
+/* 页面级通用排版 */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  /* 主内容区顶部留白（由页面承担，便于页面内的 sticky 元素贴住 header 下沿） */
+  padding-top: v.$content-pad-top;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: v.$text-primary;
+  line-height: 26px;
+}
+
+/* 封面卡片网格：设计图在 1440 视口下为 6 列 / 间距 20px */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+/* 榜单面板网格：3 列 / 间距 20px */
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* 新歌速递：3 列 */
+.new-song-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 26px;
+}
+
+/* 新碟上架：6 列 */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.chips-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-gap {
+  margin-top: 28px;
+}

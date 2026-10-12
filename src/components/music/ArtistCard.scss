@@ -1,0 +1,75 @@
+@use '../../styles/variables' as v;
+
+.artist-card {
+  /**
+   * 卡片尺寸按设计稿量出来：头像 119 + 左右 5px 内边距 = 129 宽；
+   * 上 11 + 头像 119 + gap 11 + 名字 21 + 下 15 = 177 高。
+   * 悬停只让卡片底色变浅（#f6f7fc），不做位移，所以头像与名字位置始终不变。
+   */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  width: 129px;
+  padding: 11px 5px 15px;
+  border: none;
+  border-radius: 12px;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+  /* Link 形态：去掉下划线、继承颜色 */
+  color: inherit;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    background-color: v.$bg-panel;
+  }
+
+  &__avatar {
+    width: 119px;
+    height: 119px;
+    border-radius: 50%;
+    background-color: v.$bg-soft;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__fallback {
+    font-size: 28px;
+    color: v.$text-muted;
+    background-color: v.$bg-soft;
+  }
+
+  &__name {
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 21px;
+    color: v.$text-primary;
+  }
+
+  &--skeleton {
+    cursor: default;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  &__avatar-skeleton {
+    width: 119px;
+    height: 119px;
+    border-radius: 50%;
+    background-color: v.$bg-active;
+  }
+
+  &__name-skeleton {
+    width: 64px;
+    height: 21px;
+    background-color: v.$bg-active;
+  }
+}

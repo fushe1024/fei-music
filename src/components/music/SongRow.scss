@@ -1,0 +1,186 @@
+@use '../../styles/variables' as v;
+
+.song-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  /* 48 为缩略图高度，行间距由榜单列表 gap 控制；
+     ±6 的外扩让 hover 底色的视觉高度与设计图一致 */
+  min-height: 48px;
+  margin: -6px 0;
+  padding: 6px 8px 6px 0;
+  border-radius: 8px;
+  transition: background-color 0.16s ease;
+
+  &:hover {
+    background-color: rgba(232, 233, 238, 0.6);
+
+    .song-row__thumb-mask {
+      opacity: 1;
+    }
+
+    .song-row__actions {
+      opacity: 1;
+    }
+  }
+
+  &__thumb {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex: none;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: v.$bg-soft;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__thumb-mask {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transition: opacity 0.16s ease;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      color: #fff;
+      fill: currentColor;
+      stroke-width: 0;
+    }
+  }
+
+  &__rank {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: 28px;
+    flex: none;
+  }
+
+  &__index {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    color: v.$text-primary;
+  }
+
+  &__delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
+    line-height: 12px;
+    color: v.$text-muted;
+
+    i {
+      width: 0;
+      height: 0;
+      border-right: 3.5px solid transparent;
+      border-bottom: 5px solid #f5222d;
+      border-left: 3.5px solid transparent;
+    }
+
+    &.is-up {
+      color: #f5222d;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+    padding-left: 5px;
+    padding-right: 4px;
+  }
+
+  &__title-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 16px;
+    color: v.$text-primary;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    font-size: 13px;
+    color: v.$text-muted;
+  }
+
+  &__vip {
+    flex: none;
+    height: 14px;
+    padding: 0 3px;
+    border-color: v.$brand;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+    color: v.$brand;
+    background-color: transparent;
+  }
+
+  &__actions {
+    /* 绝对定位于行右侧，避免挤占标题宽度 */
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-left: 12px;
+    background-image: linear-gradient(
+      90deg,
+      rgba(246, 247, 252, 0) 0%,
+      rgba(246, 247, 252, 0.95) 12px
+    );
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.16s ease;
+  }
+
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: none;
+    color: v.$text-primary;
+    cursor: pointer;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 1.8;
+    }
+
+    &:hover {
+      color: v.$brand;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+/// 主色：来自 globals.css 的色阶（Cyan / Sky / Blue，通过 <html data-brand> 切换）
+$brand: var(--brand);
+$brand-dark: var(--brand-dark);
+$brand-light: var(--brand-light);
+$brand-border: var(--brand-border);
+
+$text-primary: #1f222b;
+/* 胶囊标签文字（设计图取样 #2d3752） */
+$chip-text: #2c3550;
+$text-secondary: #5c6069;
+$text-muted: #7b7b7b;
+$text-placeholder: #9a9da5;
+
+$bg-page: #ffffff;
+$bg-soft: #f4f4f6;
+$bg-hover: #f6f6f8;
+$bg-active: #e8e9ee;
+$bg-panel: #f6f7fc;
+/* 列表项悬停底色（新歌条目取样 #e7e9ee） */
+$bg-item-hover: #e7e9ee;
+
+$border: #ececf0;
+$border-light: #f0f0f2;
+$border-strong: #e2e3e8;
+
+$header-h: 78px;
+$sidebar-w: 195px;
+$player-h: 78px;
+
+$content-left: 235px;
+$content-pad-x: 40px;
+$content-pad-top: 16px;
+$grid-gap: 20px;
+$cover-size: 176px;
+
+$radius-card: 8px;
+$radius-panel: 12px;
+$radius-pill: 999px;
+
+$z-header: 40;
+$z-sidebar: 30;
+$z-player: 50;

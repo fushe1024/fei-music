@@ -1,0 +1,27 @@
+@use '../../styles/variables' as v;
+
+.app {
+  height: 100%;
+  overflow: hidden;
+  background-color: v.$bg-page;
+
+  /**
+   * 滚动只发生在主内容区：容器固定在 header 之下、播放条之上，
+   * 由它自己滚动，页面本身（body）不滚动。
+   * 右侧 32px 内边距 + 8px 滚动条槽 ≈ 左侧 40px 内边距，内容区仍然是 235 ~ 1400。
+   */
+  &__main {
+    position: fixed;
+    top: v.$header-h;
+    bottom: v.$player-h;
+    left: v.$sidebar-w;
+    right: 0;
+    /* 顶部内边距放在页面自身（.page），容器不留 padding，
+       这样页面里 sticky 的标签行才能贴住容器顶边＝header 下沿 */
+    padding: 0 32px 24px v.$content-pad-x;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+}

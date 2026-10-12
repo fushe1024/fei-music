@@ -1,0 +1,30 @@
+@use '../../styles/variables' as v;
+
+/* 歌曲表格：表头 + 行（行样式在 SongTableRow.scss），discSong 与歌单详情共用 */
+.song-table {
+  &__head {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) 300px 64px;
+    align-items: center;
+    height: 40px;
+    padding: 0 12px;
+    font-size: 13px;
+    color: v.$text-muted;
+    border-bottom: 1px solid v.$border-light;
+  }
+
+  &__count {
+    color: v.$text-placeholder;
+  }
+
+  &__col-duration {
+    text-align: right;
+  }
+
+  &__skeleton {
+    height: 60px;
+    margin: 6px 12px;
+    border-radius: 8px;
+    background-color: v.$bg-active;
+  }
+}

@@ -1,0 +1,159 @@
+@import 'tailwindcss' source(none);
+@import 'tw-animate-css';
+
+/* 只扫描应用源码，避免 README / 脚本里的普通字符串被当作候选类名 */
+@source '../../index.html';
+@source '../**/*.{ts,tsx}';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------
+ * 主色阶：色卡里的 Cyan / Sky / Blue 三套（各 11 级，取自设计色卡）
+ * 切换方式：改 index.html 上的 <html data-brand="blue|sky|cyan">，
+ *          或运行时 document.documentElement.dataset.brand = 'sky'
+ * 默认（不写 data-brand，或写 blue）即 Blue。
+ * ------------------------------------------------------------------ */
+:root {
+  --brand-50: #eff6ff;
+  --brand-100: #dbeafe;
+  --brand-200: #bedbff;
+  --brand-300: #8ec5ff;
+  --brand-400: #50a2ff;
+  --brand-500: #2b7fff;
+  --brand-600: #155dfc;
+  --brand-700: #1447e6;
+  --brand-800: #193cb8;
+  --brand-900: #1c398e;
+  --brand-950: #162556;
+}
+
+[data-brand='sky'] {
+  --brand-50: #f0f9ff;
+  --brand-100: #dff2fe;
+  --brand-200: #b8e6fe;
+  --brand-300: #74d4ff;
+  --brand-400: #00bcff;
+  --brand-500: #00a6f4;
+  --brand-600: #0084d1;
+  --brand-700: #0069a8;
+  --brand-800: #00598a;
+  --brand-900: #024a70;
+  --brand-950: #052f4a;
+}
+
+[data-brand='cyan'] {
+  --brand-50: #ecfeff;
+  --brand-100: #cefafe;
+  --brand-200: #a2f4fd;
+  --brand-300: #53eafd;
+  --brand-400: #00d3f2;
+  --brand-500: #00b8db;
+  --brand-600: #0092b8;
+  --brand-700: #007595;
+  --brand-800: #005f78;
+  --brand-900: #104e64;
+  --brand-950: #053345;
+}
+
+/* 设计令牌：全部从上面的主色阶派生 */
+:root {
+  --radius: 0.625rem;
+
+  /* 语义化主色（SCSS 里通过 $brand 系列引用） */
+  --brand: var(--brand-500);
+  --brand-dark: var(--brand-600);
+  --brand-light: var(--brand-50);
+  --brand-border: var(--brand-200);
+
+  --background: #ffffff;
+  --foreground: #1f222b;
+  --card: #ffffff;
+  --card-foreground: #1f222b;
+  --popover: #ffffff;
+  --popover-foreground: #1f222b;
+
+  --primary: var(--brand-500);
+  --primary-foreground: #ffffff;
+
+  --secondary: #f4f4f6;
+  --secondary-foreground: #1f222b;
+  --muted: #f4f4f6;
+  --muted-foreground: #7b7b7b;
+  --accent: var(--brand-50);
+  --accent-foreground: var(--brand-600);
+  --destructive: #f8480c;
+  --destructive-foreground: #ffffff;
+
+  --border: #ececf0;
+  --input: #ececf0;
+  --ring: var(--brand-300);
+
+  --chart-1: var(--brand-500);
+  --chart-2: var(--brand-700);
+  --chart-3: #d5b261;
+  --chart-4: #f4842a;
+  --chart-5: var(--brand-400);
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1f222b;
+  --sidebar-primary: var(--brand-500);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e8e9ee;
+  --sidebar-accent-foreground: #1f222b;
+  --sidebar-border: #f0f0f2;
+  --sidebar-ring: var(--brand-300);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans:
+    'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei', 'Hiragino Sans GB',
+    system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

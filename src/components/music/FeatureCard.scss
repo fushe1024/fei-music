@@ -1,0 +1,126 @@
+@use '../../styles/variables' as v;
+
+.feature-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  aspect-ratio: 177 / 180;
+  padding: 14px;
+  border: none;
+  border-radius: v.$radius-panel;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+
+  /* 接口返回的榜单封面铺满卡片；背景的兜底渐变在封面加载失败时可见 */
+  &__cover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  &::before {
+    /* 底部压暗，保证白字标题可读 */
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.08) 0%,
+      rgba(0, 0, 0, 0) 45%,
+      rgba(0, 0, 0, 0.42) 100%
+    );
+    pointer-events: none;
+  }
+
+  // &::after {
+  //   /* 设计图中的竖向流光纹理 */
+  //   content: '';
+  //   position: absolute;
+  //   inset: 0;
+  //   z-index: 1;
+  //   background-image: repeating-linear-gradient(
+  //     90deg,
+  //     rgba(255, 255, 255, 0.14) 0px,
+  //     rgba(255, 255, 255, 0.14) 1px,
+  //     rgba(255, 255, 255, 0) 1px,
+  //     rgba(255, 255, 255, 0) 4px
+  //   );
+  //   pointer-events: none;
+  // }
+
+  &__badge {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: v.$brand;
+
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  &__text {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 30px;
+    color: #fff;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.28);
+  }
+
+  &__line {
+    display: block;
+  }
+
+  /* 右下角播放键：悬停 / 聚焦 / 拉取中显示 */
+  &__play {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    z-index: 2;
+    display: inline-flex;
+    color: rgba(255, 255, 255, 0.92);
+    opacity: 0;
+    transition: opacity 0.16s ease;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+  }
+
+  &:hover &__play,
+  &:focus-visible &__play,
+  &__play.is-playing {
+    opacity: 1;
+  }
+
+  &--skeleton {
+    cursor: default;
+    background-color: v.$bg-active;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+}

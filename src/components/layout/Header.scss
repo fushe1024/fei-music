@@ -1,0 +1,169 @@
+@use '../../styles/variables' as v;
+
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: v.$z-header;
+  display: flex;
+  align-items: center;
+  height: v.$header-h;
+  padding: 0 52px 0 34px;
+  background-color: #fff;
+  border-bottom: 1px solid v.$border-light;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.03);
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    flex: none;
+
+    img {
+      height: 55px;
+      width: auto;
+    }
+  }
+
+  /* 搜索框 + 建议面板的外层（面板相对它定位） */
+  &__search-wrap {
+    position: relative;
+    margin-left: 58px;
+  }
+
+  &__search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 294px;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 14px;
+    width: 18px;
+    height: 18px;
+    color: v.$text-muted;
+    pointer-events: none;
+  }
+
+  &__search-input {
+    height: 38px;
+    padding-left: 40px;
+    padding-right: 36px;
+    border: none;
+    border-radius: v.$radius-pill;
+    background-color: v.$bg-soft;
+    font-size: 14px;
+    color: v.$text-primary;
+
+    &::placeholder {
+      color: v.$text-placeholder;
+    }
+
+    &:focus-visible {
+      background-color: #f0f0f3;
+      box-shadow: none;
+      border: none;
+    }
+  }
+
+  /* 清空按钮（设计图里右侧的 ×） */
+  &__search-clear {
+    position: absolute;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: v.$text-muted;
+    cursor: pointer;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      color: v.$text-primary;
+      background-color: rgba(31, 34, 43, 0.06);
+    }
+  }
+
+  /* 搜索建议面板 */
+  &__suggest {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: v.$z-header + 5;
+    width: 100%;
+    max-height: 316px;
+    padding: 6px 0;
+    border: 1px solid v.$border;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    overflow-y: auto;
+  }
+
+  &__suggest-item {
+    display: block;
+    width: 100%;
+    padding: 0 18px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    line-height: 38px;
+    color: v.$text-primary;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+
+    &:hover,
+    &.is-active {
+      background-color: v.$bg-hover;
+    }
+  }
+
+  /* 命中的关键词用主色标出 */
+  &__suggest-hit {
+    color: v.$brand;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-left: auto;
+  }
+
+  &__client {
+    height: 32px;
+    padding: 0 6px;
+    font-size: 14px;
+    color: v.$text-primary;
+
+    &:hover {
+      background-color: transparent;
+      color: v.$brand;
+    }
+  }
+
+  &__login {
+    width: 76px;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: v.$brand;
+
+    &:hover {
+      background-color: v.$brand-dark;
+    }
+  }
+}

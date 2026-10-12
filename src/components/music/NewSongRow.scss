@@ -1,0 +1,156 @@
+@use '../../styles/variables' as v;
+
+.new-song-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  /* 用负外边距抵消内边距，悬停底色的出现不会让内容位移 */
+  margin: -8px;
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.16s ease;
+
+  &:hover {
+    background-color: v.$bg-item-hover;
+  }
+
+  /* 封面：鼠标移上来才显示播放键 */
+  &__art {
+    position: relative;
+    flex: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  &__cover {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    background-color: v.$bg-soft;
+  }
+
+  &__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.28);
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.16s ease;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+  }
+
+  &__art:hover &__play,
+  &__art:focus-visible &__play {
+    opacity: 1;
+  }
+
+  /* 播放中：封面常显遮罩 + playing.webp（白色双竖条），点封面暂停/继续 */
+  &__mask {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.72);
+  }
+
+  &__mask-icon {
+    width: 22px;
+    height: 22px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+
+    &--play {
+      color: #fff;
+      fill: currentColor;
+      stroke: rgba(0, 0, 0, 0.28);
+    }
+  }
+
+  /* 播放中：歌名与歌手都用主色 */
+  &.is-playing &__title,
+  &.is-playing &__artists {
+    color: v.$brand;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  &__title-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 15px;
+    line-height: 21px;
+    color: v.$text-primary;
+  }
+
+  /* VIP / 受限标记：蓝色系描边款 */
+  &__vip {
+    flex: none;
+    padding: 0 4px;
+    border: 1px solid v.$brand-border;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: 0.4px;
+    color: v.$brand;
+    background-color: v.$brand-light;
+  }
+
+  &__artists {
+    font-size: 13px;
+    line-height: 19px;
+    color: v.$text-muted;
+  }
+
+  &--skeleton {
+    cursor: default;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  &__art--skeleton {
+    background-color: v.$bg-active;
+  }
+
+  &__title-skeleton {
+    width: 132px;
+    height: 21px;
+    border-radius: 4px;
+    background-color: v.$bg-active;
+  }
+
+  &__artists-skeleton {
+    width: 72px;
+    height: 19px;
+    border-radius: 4px;
+    background-color: v.$bg-active;
+  }
+}

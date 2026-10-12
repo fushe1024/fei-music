@@ -1,0 +1,35 @@
+@use '../../styles/variables' as v;
+
+.load-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 12px 0 4px;
+
+  &__retry {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: none;
+    background: none;
+    color: v.$text-placeholder;
+    cursor: pointer;
+    transition: color 0.16s ease;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      color: v.$brand;
+    }
+  }
+
+  &__end {
+    font-size: 13px;
+    color: v.$text-placeholder;
+  }
+}

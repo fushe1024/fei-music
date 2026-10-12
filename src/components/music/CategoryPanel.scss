@@ -1,0 +1,113 @@
+@use '../../styles/variables' as v;
+
+.category-panel {
+  position: absolute;
+  /* 贴住标签行底部（标签行自身有 12px 下内边距，正好是面板与胶囊的间距） */
+  top: 100%;
+  right: 0;
+  z-index: 30;
+  width: 660px;
+  max-width: 100%;
+  padding: 16px 20px 20px;
+  border-radius: v.$radius-panel;
+  background-color: #fff;
+  box-shadow: 0 10px 34px rgba(31, 34, 43, 0.14);
+
+  &__tabs {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &__tab {
+    position: relative;
+    padding: 2px 0 10px;
+    border: none;
+    background: none;
+    font-size: 15px;
+    color: v.$text-primary;
+    cursor: pointer;
+    transition: color 0.16s ease;
+
+    /* 选中态：文字变主色 + 文字下方一小段高亮条 */
+    &.is-active {
+      color: v.$brand;
+      font-weight: 500;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 22px;
+        height: 3px;
+        border-radius: 2px;
+        background-color: v.$brand;
+        transform: translateX(-50%);
+      }
+    }
+
+    &:hover {
+      color: v.$brand;
+    }
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    max-height: 320px;
+    margin-top: 18px;
+    padding-right: 4px;
+    overflow-y: auto;
+  }
+
+  /* 分类数据加载中 / 失败时的占位 */
+  &__state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 72px;
+    font-size: 14px;
+    color: v.$text-muted;
+  }
+
+  &__retry {
+    height: 30px;
+    padding: 0 14px;
+    border: 1px solid v.$brand-border;
+    border-radius: v.$radius-pill;
+    background-color: v.$brand-light;
+    font-size: 13px;
+    color: v.$brand;
+    cursor: pointer;
+  }
+
+  &__item {
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    border-radius: v.$radius-pill;
+    background-color: v.$bg-soft;
+    font-size: 14px;
+    color: v.$text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: color 0.16s ease, background-color 0.16s ease;
+
+    &:hover {
+      color: v.$brand;
+    }
+
+    /* 当前选中的标签：与顶部胶囊一致的高亮 */
+    &.is-active {
+      background-color: v.$brand-light;
+      border-color: v.$brand-border;
+      color: v.$brand;
+      font-weight: 500;
+    }
+  }
+}

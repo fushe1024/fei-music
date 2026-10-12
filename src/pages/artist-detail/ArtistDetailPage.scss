@@ -1,0 +1,117 @@
+@use '../../styles/variables' as v;
+
+.artist-detail {
+  &__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 6px 0 28px;
+  }
+
+  /* 圆形大头像（设计图约 168px） */
+  &__avatar {
+    flex: none;
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: v.$bg-soft;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__avatar-skeleton {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: v.$bg-active;
+    animation: artist-detail-pulse 1.2s ease-in-out infinite;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding-top: 14px;
+  }
+
+  &__name {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 40px;
+    color: v.$text-primary;
+  }
+
+  &__fans {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: v.$text-secondary;
+  }
+
+  &__counts {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    color: v.$text-secondary;
+
+    em {
+      font-style: normal;
+      color: v.$text-primary;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 22px;
+  }
+
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 8px;
+    background-color: v.$bg-soft;
+    font-size: 15px;
+    color: v.$text-primary;
+    cursor: pointer;
+    transition: background-color 0.16s ease;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: v.$bg-item-hover;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+}
+
+@keyframes artist-detail-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}

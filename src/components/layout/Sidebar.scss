@@ -1,0 +1,85 @@
+@use '../../styles/variables' as v;
+
+.sidebar {
+  position: fixed;
+  top: v.$header-h;
+  bottom: v.$player-h;
+  left: 0;
+  z-index: v.$z-sidebar;
+  display: flex;
+  flex-direction: column;
+  width: v.$sidebar-w;
+  background-color: #fff;
+  border-right: 1px solid v.$border-light;
+
+  &__scroll {
+    flex: 1;
+    min-height: 0;
+
+    [data-slot='scroll-area-viewport'] > div {
+      height: 100%;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 24px 0 16px;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 159px;
+    height: 36px;
+    margin-left: 18px;
+    padding: 0 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: v.$text-primary;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.16s ease;
+
+    &:hover {
+      background-color: v.$bg-hover;
+    }
+
+    &.is-active {
+      background-color: v.$bg-active;
+      font-weight: 500;
+    }
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    stroke-width: 1.7;
+  }
+
+  &__label {
+    white-space: nowrap;
+  }
+
+  &__divider {
+    width: 159px;
+    margin: 20px 0 20px 18px;
+    background-color: v.$border-light;
+  }
+
+  &__item--client {
+    margin-top: auto;
+    color: v.$text-secondary;
+  }
+}

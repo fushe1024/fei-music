@@ -1,0 +1,108 @@
+@use '../../styles/variables' as v;
+
+.playlist-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  /* Link 形态：去掉下划线、继承颜色 */
+  color: inherit;
+  text-decoration: none;
+
+  &__cover {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: v.$radius-card;
+    overflow: hidden;
+    background-color: v.$bg-soft;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &__count {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 1.9;
+    }
+  }
+
+  &__hover {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.22);
+    opacity: 0;
+    transition: opacity 0.18s ease;
+
+    svg {
+      width: 42px;
+      height: 42px;
+      color: #fff;
+      fill: currentColor;
+      stroke-width: 0;
+    }
+  }
+
+  &__title {
+    margin-top: 9px;
+    font-size: 14px;
+    line-height: 19px;
+    color: v.$text-primary;
+    transition: color 0.16s ease;
+  }
+
+  &:hover {
+    .playlist-card__hover {
+      opacity: 1;
+    }
+
+    .playlist-card__cover img {
+      transform: scale(1.04);
+    }
+
+    .playlist-card__title {
+      color: v.$brand;
+    }
+  }
+
+  /* 加载骨架：与真实卡片同尺寸 */
+  &--skeleton {
+    .playlist-card__cover-skeleton {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: v.$radius-card;
+      background-color: v.$bg-active;
+    }
+
+    .playlist-card__title-skeleton {
+      width: 82%;
+      height: 19px;
+      margin-top: 9px;
+      background-color: v.$bg-active;
+    }
+  }
+}

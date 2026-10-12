@@ -1,0 +1,124 @@
+@use '../../styles/variables' as v;
+
+.search-page {
+  &__title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 38px;
+    color: v.$text-primary;
+  }
+
+  /* 设计图里标题整行是深色 */
+  &__keyword {
+    color: inherit;
+  }
+
+  /* 单曲 / 歌单 / 专辑 / 歌手 */
+  &__tabs {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    margin-top: 16px;
+    border-bottom: 1px solid v.$border-light;
+  }
+
+  &__tab {
+    position: relative;
+    padding: 0 0 12px;
+    border: none;
+    background: none;
+    font-size: 17px;
+    line-height: 24px;
+    color: v.$text-secondary;
+    cursor: pointer;
+    transition: color 0.16s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -1px;
+      width: 0;
+      height: 3px;
+      border-radius: 2px;
+      background-color: v.$brand;
+      transform: translateX(-50%);
+      transition: width 0.16s ease;
+    }
+
+    &:hover {
+      color: v.$text-primary;
+    }
+
+    &.is-active {
+      color: v.$text-primary;
+      font-weight: 500;
+
+      &::after {
+        width: 24px;
+      }
+    }
+  }
+
+  &__tools {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 18px 0 6px;
+  }
+
+  &__tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 8px;
+    background-color: v.$bg-soft;
+    font-size: 15px;
+    color: v.$text-primary;
+    cursor: pointer;
+    transition: background-color 0.16s ease;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: v.$bg-item-hover;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  &__grid {
+    margin-top: 20px;
+  }
+
+  &__count {
+    margin-top: 18px;
+    font-size: 13px;
+    color: v.$text-placeholder;
+  }
+
+  &__hint {
+    margin-top: 22px;
+    font-size: 14px;
+    color: v.$text-muted;
+  }
+
+  &__hint-keyword {
+    padding: 0 2px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: v.$brand;
+    cursor: pointer;
+  }
+}

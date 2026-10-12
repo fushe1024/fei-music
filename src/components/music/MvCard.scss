@@ -1,0 +1,125 @@
+@use '../../styles/variables' as v;
+
+.mv-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+
+  &__cover {
+    position: relative;
+    display: block;
+    width: 100%;
+    /* 设计里 MV 缩略图是 16:9 */
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: v.$bg-soft;
+
+    > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &:hover &__cover > img {
+    transform: scale(1.06);
+  }
+
+  /* 左下角播放量 */
+  &__count {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+
+    svg {
+      width: 13px;
+      height: 13px;
+    }
+  }
+
+  /* 右下角时长 */
+  &__duration {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+    line-height: 16px;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 悬停时的播放键 */
+  &__hover {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.28);
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.16s ease;
+
+    svg {
+      width: 40px;
+      height: 40px;
+      fill: currentColor;
+    }
+  }
+
+  &__cover:hover &__hover {
+    opacity: 1;
+  }
+
+  &__name {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    color: v.$text-primary;
+  }
+
+  &__artists {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 17px;
+    color: v.$text-muted;
+  }
+
+  &--skeleton {
+    pointer-events: none;
+  }
+
+  &__cover-skeleton {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+  }
+
+  &__name-skeleton {
+    width: 82%;
+    height: 16px;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+
+  &__artists-skeleton {
+    width: 50%;
+    height: 12px;
+    margin-top: 6px;
+    border-radius: 4px;
+  }
+}

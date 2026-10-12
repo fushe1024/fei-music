@@ -1,0 +1,89 @@
+@use '../../styles/variables' as v;
+
+.artist-page {
+  &__filters {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: -9px;
+  }
+
+  &__index {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    height: 28px;
+    margin-top: 11px;
+  }
+
+  &__hot {
+    /**
+     * 设计稿里「热门」的字形左沿与胶囊文字左沿在同一条竖线上（都在内容左边 13px 处），
+     * 所以这里给 13px 偏移——胶囊文字距胶囊左边也是 13px。
+     */
+    margin-left: 13px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: v.$text-primary;
+    cursor: pointer;
+
+    &.is-active {
+      color: v.$brand;
+      font-weight: 500;
+    }
+
+    &:hover {
+      color: v.$brand;
+    }
+  }
+
+  &__index-divider {
+    height: 18px;
+    background-color: v.$border;
+  }
+
+  &__letters {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+
+  &__letter {
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: #3d4148;
+    cursor: pointer;
+
+    &.is-active,
+    &:hover {
+      color: v.$brand;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    /* 卡片自带 11px 上内边距，这里减掉，保证头像首行仍在设计稿的 217.3 */
+    margin-top: 8px;
+    /* 卡片高 177 + 行距 7 = 184，与设计稿的行距 184.3 一致 */
+    row-gap: 7px;
+    justify-items: center;
+  }
+
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    margin-top: 19px;
+    border-radius: v.$radius-panel;
+    background-color: v.$bg-panel;
+    font-size: 14px;
+    color: v.$text-muted;
+  }
+}

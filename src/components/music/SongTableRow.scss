@@ -1,0 +1,207 @@
+@use '../../styles/variables' as v;
+
+.song-table-row {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 300px 64px;
+  align-items: center;
+  height: 60px;
+  padding: 0 12px;
+  border-radius: 8px;
+  transition: background-color 0.14s ease;
+
+  &:hover,
+  &.is-playing {
+    background-color: v.$bg-item-hover;
+  }
+
+  &__index {
+    font-size: 13px;
+    color: v.$text-placeholder;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__song {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  &__art {
+    position: relative;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  &__cover {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+    background-color: v.$bg-soft;
+  }
+
+  &__art-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.14s ease;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+  }
+
+  &:hover &__art-play,
+  &__art-play:focus-visible {
+    opacity: 1;
+  }
+
+  /* 播放中：封面常显遮罩 + playing.webp（白色双竖条），点击暂停/继续 */
+  &__mask {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  &__mask-icon {
+    width: 22px;
+    height: 22px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+
+    &--play {
+      color: #fff;
+      fill: currentColor;
+      stroke: rgba(0, 0, 0, 0.28);
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  &__title-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 15px;
+    line-height: 21px;
+    color: v.$text-primary;
+
+    /* 搜索结果页：歌名用主色（设计图里是蓝色链接） */
+    &.is-link {
+      color: v.$brand;
+    }
+  }
+
+  /* 正在播放的一行：歌名与歌手都用主色（设计图里整块是红的） */
+  &.is-playing &__title,
+  &.is-playing &__artists {
+    color: v.$brand;
+  }
+
+  /* VIP / 受限标记：按需求做成蓝色系（描边款） */
+  &__vip {
+    flex: none;
+    padding: 0 4px;
+    border: 1px solid v.$brand-border;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: 0.4px;
+    color: v.$brand;
+    background-color: v.$brand-light;
+  }
+
+  &__artists {
+    font-size: 12px;
+    line-height: 17px;
+    color: v.$text-muted;
+  }
+
+  /* 行内操作：悬停才出现 */
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    padding-left: 16px;
+    opacity: 0;
+    transition: opacity 0.14s ease;
+  }
+
+  &:hover &__actions,
+  &:focus-within &__actions {
+    opacity: 1;
+  }
+
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: v.$text-secondary;
+    cursor: pointer;
+    transition:
+      color 0.14s ease,
+      background-color 0.14s ease;
+
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    &:hover {
+      background-color: rgba(31, 34, 43, 0.08);
+      color: v.$text-primary;
+    }
+  }
+
+  &__menu {
+    min-width: 150px;
+  }
+
+  &__album {
+    font-size: 13px;
+    color: v.$text-muted;
+  }
+
+  &__duration {
+    font-size: 13px;
+    color: v.$text-muted;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+}

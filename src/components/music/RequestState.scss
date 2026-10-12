@@ -1,0 +1,27 @@
+@use '../../styles/variables' as v;
+
+.request-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  /* 与一行封面卡片等高，避免加载失败时页面高度跳动 */
+  min-height: 220px;
+  border-radius: v.$radius-panel;
+  background-color: v.$bg-panel;
+
+  &__icon {
+    width: 26px;
+    height: 26px;
+    color: v.$text-placeholder;
+  }
+
+  &__message {
+    max-width: 420px;
+    font-size: 14px;
+    line-height: 22px;
+    color: v.$text-muted;
+    text-align: center;
+  }
+}

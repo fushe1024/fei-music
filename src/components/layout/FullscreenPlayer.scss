@@ -1,0 +1,493 @@
+@use '../../styles/variables' as v;
+
+/* 全屏播放页：自下而上弹出 */
+@keyframes fullscreen-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* 关闭：自上而下收缩 */
+@keyframes fullscreen-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes disc-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fullscreen-player {
+  position: fixed;
+  inset: 0;
+  z-index: v.$z-player + 10;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  animation: fullscreen-up 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  &.is-closing {
+    animation: fullscreen-down 0.28s cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+
+  /* 顶部收起按钮 */
+  &__collapse {
+    position: absolute;
+    top: 34px;
+    left: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    transition: background-color 0.16s ease, color 0.16s ease;
+
+    svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    /* 行高锁死在可用高度里，否则歌词会把行撑高、唱片被推到屏幕外 */
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+    /* 唱片与右侧歌词之间留大一点 */
+    gap: 88px;
+    flex: 1;
+    min-height: 0;
+    /* 底部留出与播放条的间距（设计图里歌词渐隐区离播放条还有一段） */
+    padding: 40px 96px 56px;
+  }
+
+  /* 左侧黑胶唱片 */
+  &__disc-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  /* 黑胶：player-bg.png 当底图，中心放歌曲封面 */
+  &__disc {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 368px;
+    height: 368px;
+    background-image: url('/assets/player-bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    animation: disc-spin 22s linear infinite;
+    animation-play-state: paused;
+
+    &.is-playing {
+      animation-play-state: running;
+    }
+  }
+
+  &__disc-art {
+    width: 57%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  /* 右侧歌词 */
+  &__lyric-pane {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    /* min-height: 0 + overflow hidden，歌词才在框内滚动而不是把布局撑开 */
+    min-height: 0;
+    overflow: hidden;
+    padding-top: 24px;
+  }
+
+  &__song {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 42px;
+    color: #fff;
+  }
+
+  &__artist {
+    margin-top: 10px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  &__lyrics {
+    flex: 1;
+    min-height: 0;
+    margin-top: 26px;
+    padding-right: 8px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* 上下渐隐：用遮罩，任何背景色下都自然 */
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 13%,
+      #000 84%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 13%,
+      #000 84%,
+      transparent 100%
+    );
+
+    /* 上下留白 50%：任何一句（含第一句 / 最后一句）都能滚到正中间 */
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      height: 50%;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /* 歌词行：按设计图字号 21px、行高 30 + 上下 7 = 44px 行距；
+     高亮行只加粗变白，不放大字号（悬停同理，只改颜色） */
+  &__line {
+    padding: 7px 0;
+    font-size: 21px;
+    line-height: 30px;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.3s ease;
+
+    &:not(.is-active):hover {
+      color: rgba(255, 255, 255, 0.95);
+      cursor: default;
+    }
+
+    &.is-active {
+      font-weight: 700;
+      color: #fff;
+    }
+  }
+
+  /* 逐字高亮：--word-p 由 rAF 写入。
+     已唱部分纯白、未唱部分明显更暗（否则看不出逐字效果），边界留一点羽化 */
+  &__word {
+    --word-p: 0;
+    background-image: linear-gradient(
+      90deg,
+      #fff calc(var(--word-p) * 100% - 10%),
+      rgba(255, 255, 255, 0.34) calc(var(--word-p) * 100% + 10%)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  &__lyric-empty {
+    margin-top: 26px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* 底部控制区：进度条全宽贴顶（充当上边框），控制条内容居中 */
+  &__bottom {
+    position: relative;
+    width: 100%;
+    padding-bottom: 26px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  /* 底栏上方：与全屏背景同色的渐隐 */
+  &__fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 120px;
+    pointer-events: none;
+    background-image: linear-gradient(
+      to top,
+      var(--fs-fade, rgba(0, 0, 0, 0.4)) 0%,
+      transparent 100%
+    );
+  }
+
+  /* 全宽进度条：4px、未播放部分也是渐变（不是纯色），贴在上边框上 */
+  &__bar {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.34) 0%,
+      rgba(255, 255, 255, 0.14) 100%
+    );
+    cursor: pointer;
+
+    &::after {
+      /* 扩大点击/拖动热区 */
+      content: '';
+      position: absolute;
+      inset: -10px 0;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  /* 进度渐变手动实现，取与背景同色系的 --fs-progress */
+  &__bar-fill {
+    height: 100%;
+    background-image: var(--fs-progress);
+  }
+
+  /* 小圆点：只在悬停 / 拖动时出现 */
+  &__bar-thumb {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.16s ease;
+  }
+
+  &__bar:hover &__bar-thumb,
+  &__bar:active &__bar-thumb,
+  &__bar:focus-visible &__bar-thumb {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  &__controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 1104px;
+    margin: 0 auto;
+    padding: 22px 0 0;
+  }
+
+  /* 底部左侧：歌名 + 歌手，左边是与外面同位置的收起按钮（只有 icon） */
+  &__now {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  &__shrink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: rgba(255, 255, 255, 0.86);
+    cursor: pointer;
+    transition: background-color 0.16s ease, color 0.16s ease;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+  }
+
+  &__now-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  /* 播放列表面板的定位锚点 */
+  &__queue-anchor {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__now-title-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  /* VIP / 受限标记：蓝色系描边款 */
+  &__vip {
+    flex: none;
+    padding: 0 4px;
+    border: 1px solid var(--brand-border);
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: 0.4px;
+    color: var(--brand);
+  }
+
+  &__now-title {
+    font-size: 15px;
+    color: #fff;
+  }
+
+  &__now-artist {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.66);
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+  }
+
+  &__icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: none;
+    color: rgba(255, 255, 255, 0.82);
+    cursor: pointer;
+    transition: color 0.16s ease;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  &__play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #202027;
+    cursor: pointer;
+    transition: transform 0.16s ease;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      stroke-width: 0;
+    }
+
+    &:hover {
+      transform: scale(1.04);
+    }
+
+    /* 还没选歌：不可点击 */
+    &:disabled {
+      cursor: not-allowed;
+
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+
+  &__side {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+  }
+
+  &__queue-count {
+    margin-left: -12px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* 全屏里的音量：左边静音按钮，右边拖动 */
+  &__volume {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__volume-range {
+    width: 108px;
+    height: 4px;
+    appearance: none;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.28);
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #fff;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border: none;
+      border-radius: 50%;
+      background-color: #fff;
+      cursor: pointer;
+    }
+  }
+}

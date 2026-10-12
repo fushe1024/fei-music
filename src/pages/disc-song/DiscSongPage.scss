@@ -1,0 +1,104 @@
+@use '../../styles/variables' as v;
+
+.disc-song-page {
+  /* 顶部两个文字 tab（选中带下划线） */
+  &__tabs {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-top: -4px;
+  }
+
+  &__tab {
+    position: relative;
+    padding: 0 0 10px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    color: v.$text-muted;
+    cursor: pointer;
+    transition: color 0.16s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 4px;
+      width: 0;
+      height: 3px;
+      border-radius: 2px;
+      background-color: v.$brand;
+      transform: translateX(-50%);
+      transition: width 0.16s ease;
+    }
+
+    &:hover {
+      color: v.$text-primary;
+    }
+
+    &.is-active {
+      color: v.$text-primary;
+
+      &::after {
+        width: 22px;
+      }
+    }
+  }
+
+  /* 筛选行：左边胶囊，右边操作按钮 */
+  &__filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 14px;
+    margin-bottom: 18px;
+  }
+
+  &__tools {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 16px;
+    border: 1px solid v.$border;
+    border-radius: v.$radius-pill;
+    background-color: #fff;
+    font-size: 14px;
+    color: v.$text-primary;
+    cursor: pointer;
+    transition: color 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      color: v.$brand;
+      border-color: v.$brand-border;
+    }
+
+    &--primary {
+      border-color: transparent;
+      background-color: v.$bg-soft;
+      font-weight: 500;
+
+      svg {
+        fill: currentColor;
+      }
+    }
+  }
+
+  &__albums {
+    margin-top: 4px;
+  }
+}

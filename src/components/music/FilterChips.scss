@@ -1,0 +1,98 @@
+@use '../../styles/variables' as v;
+
+.chips {
+  display: block;
+  min-height: 30px;
+  background: transparent;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    /* height:auto 覆盖 TabsList 自带的 h-9(36px)，保持设计稿的 30px */
+    height: auto;
+    min-height: 30px;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    height: 30px;
+    padding: 0 12px;
+    border: 1px solid v.$border;
+    border-radius: v.$radius-pill;
+    background-color: #fff;
+    box-shadow: none;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 28px;
+    color: v.$chip-text;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+
+    &:hover {
+      color: v.$brand;
+      border-color: v.$brand-border;
+    }
+  }
+
+  /* 歌单页：设计图中选中项仅描边略深（无粉色强调） */
+  &--default &__item[data-state='active'] {
+    border-color: v.$border-strong;
+    background-color: #fff;
+    font-weight: 500;
+    color: v.$chip-text;
+  }
+
+  /* 歌手页：选中为粉色底 */
+  &--brand &__item[data-state='active'] {
+    border-color: v.$brand-border;
+    background-color: v.$brand-light;
+    color: v.$brand;
+  }
+
+  &__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 30px;
+    padding: 0 14px;
+    border: 1px solid v.$border;
+    border-radius: v.$radius-pill;
+    background-color: #fff;
+    font-size: 14px;
+    color: v.$chip-text;
+    cursor: pointer;
+    transition: color 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.18s ease;
+    }
+
+    &:hover {
+      color: v.$brand;
+      border-color: v.$brand-border;
+    }
+
+    /* 展开中：箭头翻向上 */
+    &.is-open svg {
+      transform: rotate(180deg);
+    }
+
+    /* 高亮：展开中，或当前筛选来自面板（此时外层胶囊不再高亮） */
+    &.is-active {
+      background-color: v.$brand-light;
+      border-color: v.$brand-border;
+      color: v.$brand;
+      font-weight: 500;
+    }
+  }
+}

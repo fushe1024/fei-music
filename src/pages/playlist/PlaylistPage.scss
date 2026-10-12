@@ -1,0 +1,32 @@
+@use '../../styles/variables' as v;
+
+.playlist-page {
+  &__filters {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: -5px;
+    margin-bottom: 20px;
+    padding: 12px 0;
+    background-color: #fff;
+  }
+
+  &__divider {
+    height: 18px;
+    background-color: v.$border;
+  }
+
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    border-radius: v.$radius-panel;
+    background-color: v.$bg-panel;
+    font-size: 14px;
+    color: v.$text-muted;
+  }
+}
