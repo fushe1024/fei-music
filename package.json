@@ -5,6 +5,10 @@
   "description": "菲菲音乐 —— 桌面端音乐 Web 应用",
   "license": "MIT",
   "type": "module",
+  "packageManager": "pnpm@11.7.0",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

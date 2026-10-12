@@ -16,6 +16,7 @@ import SearchPage from '@/pages/search/SearchPage'
 /**
  * react-router Data 模式：路由以对象数组声明（createBrowserRouter）
  * handle 用于给页面挂元信息（如标题）
+ * basename 取 Vite 的 BASE_URL：部署到子路径（如 GitHub Pages 的 /fei-music/）时路由依然可用
  */
 export const router = createBrowserRouter([
   {
@@ -61,4 +62,6 @@ export const router = createBrowserRouter([
       { path: '*', element: <NotFoundPage />, handle: { title: '页面不存在' } }
     ]
   }
-])
+], {
+  basename: import.meta.env.BASE_URL
+})

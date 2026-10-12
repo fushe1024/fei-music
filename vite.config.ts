@@ -9,6 +9,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, import.meta.dirname, '')
   const proxyTarget = env.VITE_API_PROXY_TARGET
   return {
+    // 部署到 GitHub Pages 这类子路径时用 VITE_BASE 覆盖（如 /fei-music/），本地开发保持 '/'
+    base: process.env.VITE_BASE || '/',
     plugins: [
       react(),
       babel({ presets: [reactCompilerPreset()] }),
